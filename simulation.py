@@ -51,10 +51,9 @@ class MarsColony:
         total_food_need = self.cfg.daily_food_consumption * CREW_SIZE
 
         # --- 3. Crop Production ---
-        crop_water_available = False
-        if self.water >= total_water_need + self.cfg.crop_daily_water_need:
+        crop_water_available = self.water >= (total_water_need + self.cfg.crop_daily_water_need)
+        if crop_water_available:
             total_water_need += self.cfg.crop_daily_water_need
-            crop_water_available = True
         
         food_produced, crop_o2_produced = self.crops.grow(crop_water_available)
 
@@ -91,41 +90,20 @@ class MarsColony:
                 pass
 
         # --- 6. Update Resources ---
-        
-        # Power Balance
-        self.battery += (power_gen - total_power_need)
-        if self.battery > self.cfg.max_battery:
-            self.battery = self.cfg.max_battery
-        
-        # Oxygen Balance
-        self.o2 += (o2_produced + crop_o2_produced - total_o2_need)
-        if self.o2 > self.cfg.max_o2_tank:
-            self.o2 = self.cfg.max_o2_tank
-
-        # Water Balance
-        self.water += (water_reclaimed - total_water_need)
-        if self.water > self.cfg.max_water_tank:
-            self.water = self.cfg.max_water_tank
-
-        # Food Balance
-        self.food += (food_produced - total_food_need)
+        self.battery = min(self.cfg.max_battery, self.battery + power_gen - total_power_need)
+        self.o2 = min(self.cfg.max_o2_tank, self.o2 + o2_produced + crop_o2_produced - total_o2_need)
+        self.water = min(self.cfg.max_water_tank, self.water + water_reclaimed - total_water_need)
+        self.food += food_produced - total_food_need
         
         # --- 7. Check Survival Conditions ---
-        if self.battery < 0:
-            self.alive = False
-            self.cause_of_death = "Power Failure"
-        
-        elif self.o2 < 0:
-            self.alive = False
-            self.cause_of_death = "Suffocation"
+        if   self.battery < 0: self._die("Power Failure")
+        elif self.o2 < 0:      self._die("Suffocation")
+        elif self.water < 0:   self._die("Dehydration")
+        elif self.food < 0:    self._die("Starvation")
 
-        elif self.water < 0:
-            self.alive = False
-            self.cause_of_death = "Dehydration"
-
-        elif self.food < 0:
-            self.alive = False
-            self.cause_of_death = "Starvation"
+    def _die(self, reason):
+        self.alive = False
+        self.cause_of_death = reason
 
     def run_mission(self):
         """Runs the full MISSION_DURATION days or until death"""
