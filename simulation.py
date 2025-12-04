@@ -24,14 +24,16 @@ class MarsColony:
         self.crops = CropModule(self.cfg.crop_food_production, self.cfg.crop_o2_production)
         
         # Oxygenators
-        self.oxygenators = []
-        for i in range(self.cfg.num_oxygenators):
-            self.oxygenators.append(Machine(f"Oxy-{i}", self.cfg.o2_production_rate, self.cfg.oxygenator_mtbf))
+        self.oxygenators = [
+            Machine(f"Oxy-{i}", self.cfg.o2_production_rate, self.cfg.oxygenator_mtbf)
+            for i in range(self.cfg.num_oxygenators)
+        ]
 
         # Water Reclaimers
-        self.water_reclaimers = []
-        for i in range(self.cfg.num_water_reclaimers):
-            self.water_reclaimers.append(Machine(f"WaterRec-{i}", self.cfg.water_reclamation_rate, self.cfg.water_reclaimer_mtbf))
+        self.water_reclaimers = [
+            Machine(f"WaterRec-{i}", self.cfg.water_reclamation_rate, self.cfg.water_reclaimer_mtbf)
+            for i in range(self.cfg.num_water_reclaimers)
+        ]
 
     def step(self):
         """Simulates one day"""
