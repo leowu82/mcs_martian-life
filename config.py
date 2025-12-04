@@ -40,7 +40,7 @@ class MCSimConfig:
         self.num_oxygenators = 1
         self.oxygenator_mtbf = 120 # days (arbitrary)
         self.oxygenator_power_cost = 12.0 # kWh per machine per day
-        self.o2_production_rate = 7.5 # kg/day per machine
+        self.o2_production_rate = 6.0 # kg/day per machine
 
         # Water Reclaimers
         self.num_water_reclaimers = 1
@@ -58,7 +58,7 @@ class MCSimConfig:
         if mode == "OXYGENATOR_REDUNDANCY_TEST":
             self.num_oxygenators = 3
             self.oxygenator_power_cost = 4.0 # kWh per machine per day
-            self.o2_production_rate = 2.5 # Lower rate per machine (Ensure 2 machines > Demand)
+            self.o2_production_rate = 2.0 # Lower rate per machine (Ensure 2 machines > Demand)
 
         # --- Hypothesis 2 Variables (Battery vs Solar) ---
         # Control: Balanced. Experiment: Huge Battery, Less Solar.
