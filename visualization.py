@@ -1,6 +1,11 @@
 import matplotlib.pyplot as plt
 import pandas as pd
 import textwrap
+import os
+
+script_dir = os.path.dirname(os.path.abspath(__file__))
+output_dir = os.path.join(script_dir, 'results')
+os.makedirs(output_dir, exist_ok=True)
 
 def plot_survival_curves(df_results):
     """
@@ -37,7 +42,7 @@ def plot_survival_curves(df_results):
     plt.ylabel("Survival Probability (%)")
     plt.grid(True, alpha=0.3)
     plt.legend()
-    plt.savefig("plot_survival_curves.png")
+    plt.savefig(os.path.join(output_dir, "plot_survival_curves.png"))
     print("Saved: plot_survival_curves.png")
 
 
@@ -65,7 +70,7 @@ def plot_failure_analysis(df_results):
     plt.xlabel("Experiment Configuration")
     plt.legend(title="Cause", bbox_to_anchor=(1.05, 1), loc='upper left')
     plt.tight_layout()
-    plt.savefig("plot_failure_modes.png")
+    plt.savefig(os.path.join(output_dir, "plot_failure_modes.png"))
     print("Saved: plot_failure_modes.png")
 
 
@@ -102,7 +107,7 @@ def plot_redundancy_validation(control_traces, redundancy_traces):
     plt.grid(True, alpha=0.3)
     
     plt.tight_layout()
-    plt.savefig("plot_o2_redundancy.png")
+    plt.savefig(os.path.join(output_dir, "plot_o2_redundancy.png"))
     print("Saved: plot_o2_redundancy.png")
 
 
@@ -133,5 +138,5 @@ def plot_battery_stability(control_traces, battery_traces):
     plt.ylabel("Battery Charge (kWh)")
     plt.legend()
     plt.grid(True, alpha=0.3)
-    plt.savefig("plot_battery_traces.png")
+    plt.savefig(os.path.join(output_dir, "plot_battery_traces.png"))
     print("Saved: plot_battery_traces.png")
