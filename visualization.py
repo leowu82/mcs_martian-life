@@ -95,7 +95,7 @@ def plot_redundancy_validation(control_traces, redundancy_traces):
     plt.plot([], [], color='red', label='Control (1 Big Machine)')
     plt.plot([], [], color='green', label='Redundancy (3 Small Machines)')
     
-    plt.title("Hypothesis 1 Proof: Oxygen Buffer Stability", fontsize=14)
+    plt.title("Oxygen Buffer Stability", fontsize=14)
     plt.xlabel("Mission Day")
     plt.ylabel("Oxygen Reserves (kg)")
     plt.legend(loc='upper right')
