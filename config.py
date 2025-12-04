@@ -50,7 +50,7 @@ class MCSimConfig:
         self.water_recycle_efficiency = 0.97 # 97% efficient (estimate)
 
         # --- Power System ---
-        self.solar_capacity = 60.0 # kW
+        self.solar_capacity = 45.0 # kW
         self.max_battery = 500.0 # kWh
 
         # --- Hypothesis 1 Variables (Oxygenator Redundancy) ---
@@ -63,8 +63,8 @@ class MCSimConfig:
         # --- Hypothesis 2 Variables (Battery vs Solar) ---
         # Control: Balanced. Experiment: Huge Battery, Less Solar.
         if mode == "BATTERY_TEST":
-            # Assume 1 kW Solar -> 50 kWh Battery
-            exchange_ratio = 50.0
-            reduce_amount = 20.0 # kW reduction
+            # Assume 1 kW Solar -> 40 kWh Battery
+            exchange_ratio = 40.0
+            reduce_amount = 12.5 # kW reduction
             self.solar_capacity -= reduce_amount # Reduce solar
             self.max_battery += (reduce_amount * exchange_ratio) # Increase battery
