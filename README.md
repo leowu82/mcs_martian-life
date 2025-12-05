@@ -85,19 +85,19 @@ Hypothesis Supported. The Control group frequently died during dust storms lasti
 
 ### Visualizations
 
-**Colony Survival Rate Over Time**
+Colony Survival Rate Over Time
 
 ![Colony Survival Rate Over Time](results/plot_survival_curves.png)
 
-**Failure Mode Analysis (Cause of Death)**
+Failure Mode Analysis (Cause of Death)
 
 ![Failure Mode Analysis (Cause of Death)](results/plot_failure_modes.png)
 
-**Oxygen Buffer Stability**
+Oxygen Buffer Stability
 
 ![Oxygen Buffer Stability](results/plot_o2_redundancy.png)
 
-**Battery Buffer Stability During Storms**
+Battery Buffer Stability During Storms
 
 ![Battery Buffer Stability During Storms](results/plot_battery_traces.png)
 
