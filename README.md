@@ -34,7 +34,7 @@ The simulation tracks the daily status of Oxygen, Water, Food, and Power. It uti
 | Mechanical Failure | Exponential Distribution | Modeled using Mean Time Between Failures (MTBF). |
 Repair Time | Log-Normal Distribution | Repairs are usually fast, but have a "long tail" representing catastrophic diagnostics. |
 Martian Weather | Beer-Lambert / Markov | Simulates Solar Longitude (Ls) to create "Clear" and "Dusty" seasons, plus stochastic Global Dust Storms. |
-Crop Yield | Normal Distribution | Simulates biological variability in hydroponic food and oxygen output. |
+Crop Production | Normal Distribution | Simulates biological variability in hydroponic food and oxygen output. |
 
 
 ## Phase 2: Experiments & Hypotheses
