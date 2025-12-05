@@ -14,7 +14,7 @@ Unlike standard resource management games, this project models the complex depen
 
 ## Inspiration
 
-This project was originally inspired by the mechanics of Fallout Shelter, but pivoted to focus on the constraints of real-world spaceflight. Instead of optimizing for "happiness," Project Ares optimizes for mass efficiency and reliability, utilizing data from NASA's Environmental Control and Life Support Systems (ECLSS).
+This project was originally inspired by the mechanics of Fallout Shelter, but pivoted to focus on the constraints of real-world spaceflight. Instead of optimizing for "happiness," this project optimizes for mass efficiency and reliability, utilizing data from NASA's Environmental Control and Life Support Systems (ECLSS).
 
 
 ## Phase 1: The Model
@@ -125,7 +125,7 @@ cd mars-sim
 ### Directory Structure
 
 ```
-project-ares/
+mars-sim/
 ├── main.py           # Entry point (runs the experiments)
 ├── config.py         # Simulation constants & hypothesis settings
 ├── models.py         # Physical models (Machine, Crops, Environment)
