@@ -68,28 +68,28 @@ Here's a sample run of 1,000 Monte Carlo simulations for three experiment types:
 ```terminal
 --- Starting Experiment: CONTROL ---
 Simulations: 2000
-Success Rate: 44.40%
-Failure Causes: {'Suffocation': 343, 'Starvation': 156, 'Power Failure': 567, 'Dehydration': 46}
+Success Rate: 46.75%
+Failure Causes: {'Suffocation': 380, 'Starvation': 156, 'Power Failure': 500, 'Dehydration': 29}
 
 --- Starting Experiment: OXYGENATOR_REDUNDANCY_TEST ---
 Simulations: 2000
-Success Rate: 56.80%
-Failure Causes: {'Suffocation': 3, 'Starvation': 183, 'Power Failure': 629, 'Dehydration': 49}
+Success Rate: 60.50%
+Failure Causes: {'Suffocation': 3, 'Starvation': 190, 'Power Failure': 563, 'Dehydration': 34}
 
 --- Starting Experiment: BATTERY_TEST ---
 Simulations: 2000
-Success Rate: 57.95%
-Failure Causes: {'Suffocation': 400, 'Starvation': 175, 'Power Failure': 215, 'Dehydration': 51}
+Success Rate: 61.40%
+Failure Causes: {'Suffocation': 390, 'Starvation': 210, 'Power Failure': 131, 'Dehydration': 41}
 
 --- Starting Experiment: CROP_SUBSTRATE_TEST ---
 Simulations: 2000
-Success Rate: 49.20%
-Failure Causes: {'Suffocation': 402, 'Starvation': 31, 'Power Failure': 542, 'Dehydration': 41}
+Success Rate: 51.55%
+Failure Causes: {'Suffocation': 334, 'Starvation': 38, 'Power Failure': 522, 'Dehydration': 75}
 
 --- Starting Experiment: COMBINED_TEST ---
 Simulations: 2000
-Success Rate: 81.65%
-Failure Causes: {'Suffocation': 7, 'Starvation': 51, 'Power Failure': 231, 'Dehydration': 78}
+Success Rate: 85.25%
+Failure Causes: {'Suffocation': 3, 'Starvation': 55, 'Power Failure': 155, 'Dehydration': 82}
 ```
 
 ### Conclusion 1: Redundancy Eliminates "Sudden Death"
