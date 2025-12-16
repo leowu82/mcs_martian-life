@@ -82,15 +82,15 @@ def plot_redundancy_validation(control_traces, redundancy_traces):
     """
     plt.figure(figsize=(12, 6))
     
-    # Plot 20 random traces from Control (Red)
+    # Plot 30 random traces from Control (Red)
     # These will look like "Cliffs" - steady, then plummeting to death.
-    for i in range(min(20, len(control_traces))):
+    for i in range(min(30, len(control_traces))):
         # Only plot if they actually died of suffocation or survived to show the contrast
         plt.plot(control_traces[i]['o2'], color='red', alpha=0.20, linewidth=1.5)
 
-    # Plot 20 random traces from Redundancy (Green)
+    # Plot 30 random traces from Redundancy (Green)
     # These will look like "Dips" - dropping slightly when 1 machine breaks, then recovering.
-    for i in range(min(20, len(redundancy_traces))):
+    for i in range(min(30, len(redundancy_traces))):
         plt.plot(redundancy_traces[i]['o2'], color='green', alpha=0.20, linewidth=1.5)
 
     # Threshold Line
@@ -119,14 +119,14 @@ def plot_battery_stability(control_traces, battery_traces):
     """
     plt.figure(figsize=(12, 6))
     
-    # Plot 20 random traces from Control (Red)
+    # Plot 30 random traces from Control (Red)
     # This shows the volatility of the small battery
-    for i in range(min(20, len(control_traces))):
+    for i in range(min(30, len(control_traces))):
         plt.plot(control_traces[i]['battery'], color='red', alpha=0.20)
         
-    # Plot 20 random traces from Battery Test (Blue)
+    # Plot 30 random traces from Battery Test (Blue)
     # This shows the stability of the large battery
-    for i in range(min(20, len(battery_traces))):
+    for i in range(min(30, len(battery_traces))):
         plt.plot(battery_traces[i]['battery'], color='blue', alpha=0.20)
         
     # Dummy lines for legend
