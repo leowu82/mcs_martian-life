@@ -75,10 +75,16 @@ if __name__ == "__main__":
     # Run Hypothesis 2 (Battery Buffer)
     battery_summary, battery_histories = run_experiment("BATTERY_TEST", n_simulations=n_simulations)
 
+    # Run Hypothesis 3 (Crop Substrate)
+    substrate_summary, substrate_histories = run_experiment("CROP_SUBSTRATE_TEST", n_simulations=n_simulations)
+
+    # Run Combined Test
+    combined_summary, combined_histories = run_experiment("COMBINED_TEST", n_simulations=n_simulations)
+
     # --- 2. Combine Results ---
-    df_all = pd.concat([control_summary, oxy_summary, battery_summary], ignore_index=True)
-    # Order by "Control", "Oxygenator Redundancy", "Battery Test"
-    df_all['Experiment'] = pd.Categorical(df_all['Experiment'], categories=["CONTROL", "OXYGENATOR_REDUNDANCY_TEST", "BATTERY_TEST"], ordered=True)
+    df_all = pd.concat([control_summary, oxy_summary, battery_summary, substrate_summary, combined_summary], ignore_index=True)
+    # Order by "Control", "Oxygenator Redundancy", "Battery Test", "Crop Substrate Test", "Combined Test"
+    df_all['Experiment'] = pd.Categorical(df_all['Experiment'], categories=["CONTROL", "OXYGENATOR_REDUNDANCY_TEST", "BATTERY_TEST", "CROP_SUBSTRATE_TEST", "COMBINED_TEST"], ordered=True)
 
     # --- 3. Visualizations ---
     print("\n\nGenerating Visualizations...")
