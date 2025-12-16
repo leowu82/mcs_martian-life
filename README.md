@@ -9,7 +9,7 @@
 
 A Monte Carlo simulation project designed to model the survivability of a 6-person Martian colony over a 500-day mission.
 
-Unlike standard resource management games, this project models the complex dependencies between electrical power, life support (ECLSS), and biological systems. It tests whether a colony is better served by Engineering Redundancy (spare machines) or Resource Buffering (larger batteries) when facing stochastic risks like dust storms and mechanical failures.
+Unlike standard resource management games, this project models the complex dependencies between electrical power, life support (ECLSS), and biological systems. It tests three major architectural hypotheses: Redundancy (spare machines), Energy Buffering (batteries vs. solar), and Biological Resilience (soil vs hydroponics). when facing stochastic risks like dust storms and mechanical failures.
 
 
 ## Inspiration
@@ -34,12 +34,12 @@ The simulation tracks the daily status of Oxygen, Water, Food, and Power. It uti
 | Mechanical Failure | Exponential Distribution | Modeled using Mean Time Between Failures (MTBF). |
 Repair Time | Log-Normal Distribution | Repairs are usually fast, but have a "long tail" representing catastrophic diagnostics. |
 Martian Weather | Beer-Lambert / Markov | Simulates Solar Longitude (Ls) to create "Clear" and "Dusty" seasons, plus stochastic Global Dust Storms. |
-Crop Production | Normal Distribution | Simulates biological variability in hydroponic food and oxygen output. |
+Crop Production | Normal Distribution | Simulates biological variability in food and oxygen production. |
 
 
 ## Phase 2: Experiments & Hypotheses
 
-Ran 1000 Monte Carlo simulations for three distinct experiments.
+Ran 2000 Monte Carlo simulations for three distinct experiments.
 
 ### The Control Group (Baseline)
 - **Setup**: 1 Large Oxygenator, Standard Battery, Standard Solar.
@@ -54,6 +54,11 @@ Ran 1000 Monte Carlo simulations for three distinct experiments.
 - **Question**: Given a fixed mass budget, is it better to maximize Solar Power (Generation) or Battery Buffer (Storage)?
 - **Hypothesis**: Due to the stochastic nature of storms, Storage > Generation. Bringing more batteries will yield higher survival rates than more solar panels.
 - **Implementation**: Reduced Solar Capacity to fund a massive Battery Bank increase.
+
+### Hypothesis 3: The Substrate Resilience Test
+- **Question**: prioritize high-yield hydroponics (plants grow in water) or resilient soil-based (plants grow in Martian regolith mixed with compost) farming when facing unreliable power supply?
+- **Hypothesis**: "Despite lower daily food production, Soil-Based farming will result in a higher survival rate than Hydroponics because its passive moisture retention prevents catastrophic crop die-offs during power failures"
+- **Implementation**: Reduced Crop Production Rate by 20% but improved Crop Drought Resistance (Decay Rate reduced from 0.3 to 0.05).
 
 
 ## Phase 3: Results & Conclusions
@@ -91,7 +96,10 @@ Failure Causes: {'Suffocation': 7, 'Starvation': 51, 'Power Failure': 231, 'Dehy
 Hypothesis Supported. In the Control group, a single point failure often led to death before repairs could be finished (Suffocation). In the Redundancy Test, Suffocation deaths dropped to nearly zero. The redundancy architecture successfully converted fatal single point failures into manageable stress events, allowing the colony to limp along until repairs were made.
 
 ### Conclusion 2: Buffers Beat Generation
-Hypothesis Supported. The Control group frequently died during dust storms lasting >6 days. The Battery Test group, despite having lower daily power generation, survived storms lasting up to 12 days. The data suggests that endurance (batteries) is more valuable than peak capacity (solar panels) due to the stochastic nature of storms.
+Hypothesis Supported. The Control group frequently died during dust storms lasting >6.5 days. The Battery Test group, despite having lower daily power generation, survived storms lasting up to 13 days. The data suggests that endurance (batteries) is more valuable than peak capacity (solar panels) due to the stochastic nature of storms (note that storms last 5-15 days).
+
+### Conclusion 3: Soil Beats Hydroponics
+Hypothesis Supported. Starvation deaths dropped significantly. The Control group's hydroponic crops frequently died entirely during power outages (crops die in 3 days without water), leading to starvation weeks later. The soil-based crops, despite lower daily production, survived the outages and recovered, keeping the crews alive.
 
 ### Visualizations
 
