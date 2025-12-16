@@ -64,7 +64,7 @@ if __name__ == "__main__":
     print("Gathering Data...")
     
     # Number of simulations per experiment
-    n_simulations = 1000
+    n_simulations = 2000
     
     # Run Control
     control_summary, control_histories = run_experiment("CONTROL", n_simulations=n_simulations)
