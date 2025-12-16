@@ -10,7 +10,7 @@ class MCSimConfig:
     def __init__(self, mode="CONTROL"):
         """
         Parameters for the hypotheses.
-        Modes: 'CONTROL', 'OXYGENATOR_REDUNDANCY_TEST', 'BATTERY_TEST'
+        Modes: 'CONTROL', 'OXYGENATOR_REDUNDANCY_TEST', 'BATTERY_TEST', 'CROP_SUBSTRATE_TEST', 'COMBINED_TEST'
         """
         self.mode = mode
         
@@ -25,14 +25,16 @@ class MCSimConfig:
         self.max_o2_tank = 50.0 # kg
         self.starting_water = 1000.0 # Liters
         self.max_water_tank = 2000.0 # Liters
-        self.starting_battery = 500.0 # kWh
         self.starting_food = 50000.0 # kCal
+        self.max_food_storage = 100000.0 # kCal
+        self.food_spoilage_rate = 0.01 # per day
 
         # --- Crop Settings ---
         # Note: power cost for LEDs, pumps, etc. is included in daily_base_power_consumption
-        self.crop_daily_water_need = 11.0 # Liters/day
-        self.crop_food_production = 18350.0 # kCal/day
+        self.crop_daily_water_need = 14.5 # Liters/day
+        self.crop_food_production = 25000.0 # kCal/day
         self.crop_o2_production = 0.8 # kg/day
+        self.crop_decay_rate = 0.3 # Health decay rate without water
 
         # --- Default Machine Settings ---
         
@@ -51,20 +53,27 @@ class MCSimConfig:
 
         # --- Power System ---
         self.solar_capacity = 45.0 # kW
+        self.starting_battery = 500.0 # kWh
         self.max_battery = 600.0 # kWh
 
         # --- Hypothesis 1 Variables (Oxygenator Redundancy) ---
         # Control: 1 Big Machine. Experiment: 3 Small Machines.
-        if mode == "OXYGENATOR_REDUNDANCY_TEST":
+        if mode == "OXYGENATOR_REDUNDANCY_TEST" or mode == "COMBINED_TEST":
             self.num_oxygenators = 3
             self.oxygenator_power_cost = 4.0 # kWh per machine per day
             self.o2_production_rate = 2.0 # Lower rate per machine (Ensure 2 machines > Demand)
 
         # --- Hypothesis 2 Variables (Battery vs Solar) ---
         # Control: Balanced. Experiment: Huge Battery, Less Solar.
-        if mode == "BATTERY_TEST":
+        if mode == "BATTERY_TEST" or mode == "COMBINED_TEST":
             # Assume 1 kW Solar -> 50 kWh Battery
             exchange_ratio = 50.0
             reduce_amount = 12.5 # kW reduction
             self.solar_capacity -= reduce_amount # Reduce solar
             self.max_battery += (reduce_amount * exchange_ratio) # Increase battery
+
+        # --- Hypothesis 3 Variables (Crop Substrate Test) ---
+        if mode == "CROP_SUBSTRATE_TEST" or mode == "COMBINED_TEST":
+            # Soil Farming Strategy
+            self.crop_food_production = 20000.0
+            self.crop_decay_rate = 0.05
