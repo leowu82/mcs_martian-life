@@ -21,7 +21,7 @@ class MarsColony:
         
         # Systems
         self.env = MarsEnvironment()
-        self.crops = CropModule(self.cfg.crop_food_production, self.cfg.crop_o2_production)
+        self.crops = CropModule(self.cfg.crop_food_production, self.cfg.crop_o2_production, self.cfg.crop_decay_rate)
         
         # Oxygenators
         self.oxygenators = [
@@ -100,7 +100,8 @@ class MarsColony:
         total_food_need = self.cfg.daily_food_consumption * CREW_SIZE
 
         # --- 3. Crop Production ---
-        crop_water_available = self.water >= (total_water_need + self.cfg.crop_daily_water_need)
+        # Should have enough water for crews + crops and >= 5.5% tank remaining
+        crop_water_available = self.water >= (total_water_need + self.cfg.crop_daily_water_need) and self.water > 0.055 * self.cfg.max_water_tank
         if crop_water_available:
             total_water_need += self.cfg.crop_daily_water_need
         
@@ -141,7 +142,12 @@ class MarsColony:
         self.battery = min(self.cfg.max_battery, self.battery + power_gen - total_power_need)
         self.o2 = min(self.cfg.max_o2_tank, self.o2 + o2_produced + crop_o2_produced - total_o2_need)
         self.water = min(self.cfg.max_water_tank, self.water + water_reclaimed - total_water_need)
-        self.food += food_produced - total_food_need
+
+        # Food logic: production -> spoilage -> consumption -> storage limit
+        self.food += food_produced
+        self.food *= (1 - self.cfg.food_spoilage_rate)
+        self.food -= total_food_need
+        self.food = min(self.cfg.max_food_storage, self.food)
         
         # --- 7. Check Survival Conditions ---
         if   self.battery < 0: self._die("Power Failure")
