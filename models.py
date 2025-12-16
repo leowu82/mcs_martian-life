@@ -82,7 +82,8 @@ class MarsEnvironment:
 
     def get_sunlight_efficiency(self, Ls_degrees):
         """
-        Returns sunlight efficiency (0.0 to 1.0) based on Martian season (Ls) and dust storms.
+        Returns sunlight efficiency (0.0 to 1.0) based on Martian season (Ls) and dust storms. 
+        Note that some parameters are adjusted to fit this simulation.
 
         Args:
             Ls_degrees (float): Solar Longitude in degrees (0-360)
@@ -103,17 +104,24 @@ class MarsEnvironment:
         if self.is_storming:
             # Storm decay phase
             self.storm_counter -= 1
-            storm_opacity = 4.0 # Massive blockage
+            storm_opacity = 2.0 # Massive blockage
             if self.storm_counter <= 0:
                 self.is_storming = False
         else:
             storm_opacity = 0.0
-            # Trigger risk zone
-            if 200 < Ls_degrees < 300:
-                # 0.5% daily chance triggers a ~33% seasonal chance
-                if random.random() < 0.005: 
-                    self.is_storming = True
-                    self.storm_counter = random.randint(5, 15) # Storm lasts 5-15 days (arbitrary)
+            
+            # Calculate daily storm probability
+            peak_prob = 0.005 # Chance at absolute peak
+            mu = 250  # Peak day
+            sigma = 40 # Spread
+            
+            # PDF: f(x) = P_max * exp( - (x - mu)^2 / (2 * sigma^2) )
+            daily_storm_prob = peak_prob * math.exp( - ((Ls_degrees - mu) ** 2) / (2 * sigma ** 2) )
+            
+            # Only roll for storm if probability is significant (> 0.0001)
+            if daily_storm_prob > 0.0001 and random.random() < daily_storm_prob:
+                self.is_storming = True
+                self.storm_counter = random.randint(5, 15) # Storm lasts 5-15 days (arbitrary)
 
         # --- 3. TOTAL OPACITY ---
         total_tau = tau_base + storm_opacity
