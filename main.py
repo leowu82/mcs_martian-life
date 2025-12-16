@@ -39,6 +39,9 @@ def run_experiment(experiment_mode, n_simulations=1000):
         df_history['Run_ID'] = i
         all_histories.append(df_history)
 
+    # Sort death causes by index descending
+    death_causes = dict(sorted(death_causes.items(), key=lambda item: item[0], reverse=True)) 
+    
     # Summarize Results
     success_rate = (success_count / n_simulations) * 100
     print(f"Simulations: {n_simulations}")
